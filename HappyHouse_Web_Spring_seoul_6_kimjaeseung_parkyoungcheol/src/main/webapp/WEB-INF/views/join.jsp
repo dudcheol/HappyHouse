@@ -1,35 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="root" value="${pageContext.request.contextPath}"/>
-<script type="text/javascript">
-function join() {
-	if(document.getElementById("userid").value == "") {
-		alert("아이디 입력!!!");
-		return;
-	} else if(document.getElementById("username").value == "") {
-		alert("이름 입력!!!");
-		return;
-	} else if(document.getElementById("password").value == "") {
-		alert("비밀번호 입력!!!");
-		return;
-	} else if(document.getElementById("confirm").value != document.getElementById("password").value) {
-		alert("비밀번호가 다릅니다.");
-		return;
-	} else if(document.getElementById("email").value == "") {
-		alert("이메일 입력!!!");
-		return;
-	} else {
-		document.getElementById("join-form").action = "${root}/user";
-		document.getElementById("join-form").submit();
-	}
-}
-</script>
 <body>
 	<div class="modal fade" id="joinModal">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
-
+ 
 				<!-- Modal Header -->
 				<div class="modal-header">
 					<h4 class="modal-title">회원가입 정보를 입력하세요</h4>
@@ -38,7 +14,7 @@ function join() {
 
 				<!-- Modal body -->
 				<div class="modal-body">
-					<form id="join-form" class="form-horizontal" method="post" action="">
+					<form id="join-form" class="form-horizontal" method="post" action="insertProcess.bod">
 					<input type="hidden" name="act" id="act" value="join">	
 						<div class="form-group">
 							<label for="name" class="cols-sm-2 control-label">ID</label>
@@ -90,13 +66,10 @@ function join() {
 								</div>
 							</div>
 						</div>
+						<input type=submit class="btn btn-primary btn-lg btn-block login-button" value=가입하기>
 					</form>
 				</div>
-				<div class="modal-footer">
-					<div class="form-group ">
-						<button type="button" class="btn btn-primary btn-lg btn-block login-button" id="registerBtn" onclick="javascript:join()">가입하기</button>
-					</div>
-				</div>
+				
 			</div>
 		</div>
 	</div>

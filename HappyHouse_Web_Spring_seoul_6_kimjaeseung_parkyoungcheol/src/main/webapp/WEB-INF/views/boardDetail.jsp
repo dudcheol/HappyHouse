@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
+<html> 
 <head>
 
   <meta charset="utf-8">
@@ -112,9 +112,9 @@
 					<form class="form-signin" method="POST"
 						onSubmit="logincall();return false">
 						<label for="inputEmail" class="sr-only">Your ID</label> <input
-							type="text" id="uid" class="form-control" placeholder="Your ID"
+							type="text" id="userid" class="form-control" placeholder="Your ID"
 							required autofocus><BR> <label for="inputPassword"
-							class="sr-only">Password</label> <input type="password" id="upw"
+							class="sr-only">Password</label> <input type="password" id="password"
 							class="form-control" placeholder="Password" required><br>
 						<div class="checkbox">
 							<label> <input type="checkbox" value="remember-me">
@@ -122,10 +122,8 @@
 							</label>
 						</div>
 						<div style="float: right">
-							<button id="btn-Join" class="btn btn-lg btn-secondary">회
-								원 가 입</button>
-							<button id="btn-Yes" class="btn btn-lg btn-primary" type="submit">로
-								그 인</button>
+							<button type="button" id="btn-Join" class="btn btn-lg btn-secondary" data-target="#joinModal" onclick="javascript:mvjoin()">회 원 가 입</button>
+							<button id="btn-Yes" class="btn btn-lg btn-primary" type="submit">로 그 인</button>
 						</div>
 					</form>
 				</div>
@@ -229,12 +227,7 @@
 						</div>
 					</form>
 				</div>
-				<div class="modal-footer">
-					<div class="form-group ">
-						<button type="button"
-							class="btn btn-primary btn-lg btn-block login-button">가입하기</button>
-					</div>
-				</div>
+				
 			</div>
 		</div>
 	</div>
@@ -264,7 +257,7 @@
 						님 안녕하세요!
 					</p>
 					<button id="mypage" type="button" class="btn btn-info">마이페이지</button>
-					<button id="logout" type="button" class="btn btn-secondary">로그아웃</button>
+					<button id="logout" type="button" class="btn btn-secondary" onclick="location.href='logout.bod'">로그아웃</button>
 				</div>
 			</div>
 		</div>

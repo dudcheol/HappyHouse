@@ -5,7 +5,7 @@
 <c:if test="${cookie.ssafy_id.value ne null }">
 	<c:set var="saveid" value="${cookie.ssafy_id.value }"/>
 	<c:set var="idck" value=" checked=\"checked\""/>
-</c:if>
+</c:if> 
 <script type="text/javascript">
 function login() {
 	if(document.getElementById("uid").value == "") {
@@ -19,7 +19,6 @@ function login() {
 		document.getElementById("login-form").submit();
 	}
 }
-	 
 	 
 </script>
 </head>
@@ -36,13 +35,13 @@ function login() {
 				</div>
 
 				<!-- Modal body -->
-				<div class="modal-body">
-					<form id="login-form" class="form-signin" method="POST" action="">
+				<div class="modal-body"> 
+					<form id="login-form" class="form-signin" method="GET" action="loginprocess.bod">
 					<input type="hidden" name="act" id="act" value="login">	
 						<label for="inputEmail" class="sr-only">Your ID</label> 
-						<input type="text" id="uid" name="uid" class="form-control" placeholder="Your ID" value="${saveid}"required autofocus><br> 
+						<input type="text" id="userid" name="userid" class="form-control" placeholder="Your ID" value="${saveid}"required autofocus><br> 
 						<label for="inputPassword" class="sr-only">Password</label> 
-						<input type="password" id="upw" name="upw" class="form-control" placeholder="Password" required><br>
+						<input type="password" id="password" name="password" class="form-control" placeholder="Password" required><br>
 						<div class="checkbox">
 							<label> <input type="checkbox" value="remember-me" id="idsave" name="idsave" value="saveok"${idck}>
 								아이디저장
@@ -50,9 +49,11 @@ function login() {
 						</div>
 						<div style="float: right">
 							<button type="button" id="btn-Join" class="btn btn-lg btn-secondary" data-target="#joinModal" onclick="javascript:mvjoin()">회 원 가 입</button> 
-							<button type="button" id="btn-Yes" class="btn btn-lg btn-primary" onclick="javascript:login()">로 그 인</button>
+							<input type=submit class="btn btn-lg btn-primary" value="로그인">
+							<!-- <button type="button" id="btn-Yes" class="btn btn-lg btn-primary" onclick="location.href='loginprocess.bod'">로 그 인</button>
+						 -->
 						</div>
-						<alert >
+						<alert>
 					</form>
 				</div>
 			</div>

@@ -11,5 +11,5 @@ public class HappyHouseWebSpringSeoul6KimjaeseungParkyoungcheolApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(HappyHouseWebSpringSeoul6KimjaeseungParkyoungcheolApplication.class, args);
 	}
-
+ 
 }

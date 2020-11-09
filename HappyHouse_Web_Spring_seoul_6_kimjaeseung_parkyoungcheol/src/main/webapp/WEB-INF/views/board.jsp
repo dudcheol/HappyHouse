@@ -2,9 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
+<html> 
 <head>
-
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
@@ -264,7 +263,7 @@
 						님 안녕하세요!
 					</p>
 					<button id="mypage" type="button" class="btn btn-info">마이페이지</button>
-					<button id="logout" type="button" class="btn btn-secondary">로그아웃</button>
+					<button id="logout" type="button" class="btn btn-secondary" onclick="location.href='logout.bod'">로그아웃</button>
 				</div>
 			</div>
 		</div>
