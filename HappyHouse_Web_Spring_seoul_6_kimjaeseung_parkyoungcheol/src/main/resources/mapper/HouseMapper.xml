@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper file: 실행 할 쿼리 문을 저장하는 파일. 테이블 하나당 한개씩 작성
+namespace: 작업하는 테이블들을 구분해주기 위한 식별자 -->
+<mapper namespace="com.hh.mapper.HouseMapper">
+
+	<select id="getSido" resultType="SidoGugunCodeDto">
+		SELECT left(sido_code,2) sidoCode, sido_name sidoName FROM sidocode ORDER BY sido_code
+	</select>
+
+ 	<select id="getGugunInSido" parameterType="string" resultType="SidoGugunCodeDto">
+		SELECT left(gugun_code,5) gugunCode, gugun_name gugunName FROM guguncode
+		where left(gugun_code,2) = #{sido}
+		ORDER BY gugun_code
+	</select>
+	
+	<select id="getDongInGugun" parameterType="string" resultType="HouseInfoDto">
+		SELECT distinct dong, code FROM houseinfo
+		where code = #{gugun}
+		ORDER BY dong
+	</select>
+	
+	<select id="getAptInDong" parameterType="string" resultType="HouseInfoDto">
+		SELECT no,dong,AptName,code,jibun FROM houseinfo WHERE dong = #{dong}
+		ORDER BY AptName
+	</select>
+	
+	<select id="getDealsInDong" parameterType="string" resultType="HouseDealDto">
+		SELECT * FROM housedeal WHERE dong = #{dong}
+		ORDER BY AptName
+	</select>
+	
+	<select id="getSearchByAptName" parameterType="string" resultType="HouseDealDto">
+		SELECT * FROM housedeal WHERE aptName LIKE #{aptName}
+		ORDER BY dong
+	</select>
+
+</mapper>
+
+
+
+
+
+
