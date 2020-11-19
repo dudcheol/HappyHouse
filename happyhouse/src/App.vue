@@ -1,19 +1,26 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Map></Map>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Vue from 'vue';
+import Map from '@/views/Map.vue';
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
+
+Vue.use(BootstrapVue);
+Vue.use(IconsPlugin);
+
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
-}
+    Map,
+  },
+};
 </script>
 
 <style>
@@ -23,6 +30,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
