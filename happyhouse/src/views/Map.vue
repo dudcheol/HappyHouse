@@ -7,30 +7,42 @@
 
 <script>
 import MapInput from '../components/map/MapInput.vue';
+import { mapGetters, mapActions } from 'vuex';
+
+const MAP_APP_KEY = process.env.VUE_APP_MAP_APP_KEY;
 
 export default {
   components: { MapInput },
-  comments: {
-    MapInput,
-  },
   data() {
     return {};
   },
+
   mounted() {
-    console.log('appkey = ' + process.env.VUE_APP_MAP_APP_KEY); //TODO:이거 지금 undefined뜸 ㅠㅠ
     window.kakao && window.kakao.maps
       ? this.initMap()
       : this.addKakaoMapScript();
+
+    this.HOUSEINFO();
+    this.GEOCODE(this.getHouseInfos);
   },
+
+  computed: {
+    ...mapGetters(['getHouseInfos', 'getMarkers']),
+  },
+
   methods: {
+    ...mapActions(['HOUSEINFO', 'GEOCODE']),
+
     addKakaoMapScript() {
       const script = document.createElement('script');
       /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);
       script.src =
-        'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=a64403550aa087a88ef80ec3af11a653';
+        'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=' +
+        MAP_APP_KEY;
       document.head.appendChild(script);
     },
+
     initMap() {
       var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
       var options = {
@@ -40,7 +52,6 @@ export default {
       };
 
       var map = new kakao.maps.Map(container, options); //지도 생성 및 객체
-
       console.log(map);
     },
   },
