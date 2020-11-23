@@ -12,7 +12,7 @@ import com.hh.vo.SidoGugunCodeDto;
 
 @Service
 public class HouseMapServiceImpl implements HouseMapService {
-	
+
 	@Autowired
 	private HouseMapDao dao;
 
@@ -50,6 +50,11 @@ public class HouseMapServiceImpl implements HouseMapService {
 	public List<HouseDealDto> getHouseDealInRange(String swlat, String swlng, String nelat, String nelng)
 			throws Exception {
 		return dao.getHouseDealInRange(swlat, swlng, nelat, nelng);
+	}
+
+	@Override
+	public List<HouseDealDto> getSearchByLatLng(String lat, String lng) throws Exception {
+		return dao.getSearchByLatLng(lat, lng);
 	}
 
 }

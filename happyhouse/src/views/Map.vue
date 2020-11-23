@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import MapInput from '../components/map/MapInput.vue';
-import InfoDetail from '../components/map/InfoDetail.vue';
+import MapInput from '@/components/map/MapInput.vue';
+import InfoDetail from '@/components/map/InfoDetail.vue';
 import { mapGetters, mapActions } from 'vuex';
 
 const MAP_APP_KEY = process.env.VUE_APP_MAP_APP_KEY;
@@ -29,6 +29,7 @@ export default {
     return {
       map: null,
       markers: [],
+      clusterer: null,
       isSidebarOpen: false,
       selectedInfo: {},
     };
@@ -59,7 +60,8 @@ export default {
       script.onload = () => kakao.maps.load(this.initMap);
       script.src =
         'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=' +
-        MAP_APP_KEY;
+        MAP_APP_KEY +
+        '&libraries=clusterer';
       document.head.appendChild(script);
     },
 
@@ -82,7 +84,11 @@ export default {
       // 지도가 이동, 확대, 축소로 인해 지도영역이 변경되면 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
       kakao.maps.event.addListener(this.map, 'tilesloaded', this.moveMap);
 
-      this.HOUSEINFO();
+      this.clusterer = new kakao.maps.MarkerClusterer({
+        map: this.map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
+        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+        minLevel: 5, // 클러스터 할 최소 지도 레벨
+      });
     },
 
     moveMap() {
@@ -102,13 +108,40 @@ export default {
     },
 
     updateMap(houseinfos) {
-      for (var i = 0; i < houseinfos.length; i++) {
-        var position = new kakao.maps.LatLng(
+      this.clearMarkers(null);
+      this.clusterer.clear();
+      var level = this.map.getLevel();
+      console.log(this.map.getLevel());
+
+      if (level > 5) {
+        alert(
+          '데이터 수 너무 많음! 처리가 필요함! 확대 level에 따라 다르게 접근해야할 필요 있음'
+        );
+        return;
+      }
+
+      if (level > 4) {
+        for (let i = 0; i < houseinfos.length; i++) {
+          this.markers.push(
+            new kakao.maps.Marker({
+              position: new kakao.maps.LatLng(
+                houseinfos[i].lat,
+                houseinfos[i].lng
+              ),
+              clickable: true,
+            })
+          );
+        }
+        this.clusterer.addMarkers(this.markers);
+        return;
+      }
+
+      for (let i = 0; i < houseinfos.length; i++) {
+        const position = new kakao.maps.LatLng(
           houseinfos[i].lat,
           houseinfos[i].lng
         );
         this.addMarker(this.map, position, houseinfos[i]);
-        // console.log(JSON.stringify(data));
       }
     },
 

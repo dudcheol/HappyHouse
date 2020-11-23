@@ -15,5 +15,6 @@ public interface HouseMapService {
 	
 	List<HouseDealDto> getDealsInDong(String dong) throws Exception;
 	List<HouseDealDto> getSearchByAptName(String aptName) throws Exception;
-	List<HouseDealDto> getHouseDealInRange(String swlat, String swlng, String nelat, String nelng) throws Exception; 
+	List<HouseDealDto> getHouseDealInRange(String swlat, String swlng, String nelat, String nelng) throws Exception;
+	List<HouseDealDto> getSearchByLatLng(String lat, String lng) throws Exception;
 }

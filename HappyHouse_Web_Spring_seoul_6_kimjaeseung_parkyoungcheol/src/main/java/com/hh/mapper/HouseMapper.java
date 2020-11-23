@@ -15,5 +15,6 @@ public interface HouseMapper {
 	public List<HouseDealDto> getDealsInDong(String dong) throws Exception;
 	public List<HouseDealDto> getSearchByAptName(String aptName) throws Exception;
 	public List<HouseDealDto> getHouseDealInRange(String swlat, String swlng, String nelat, String nelng) throws Exception;
+	public List<HouseDealDto> getSearchByLatLng(String lat, String lng) throws Exception;
 	
 }

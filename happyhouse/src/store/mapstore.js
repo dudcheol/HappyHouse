@@ -10,35 +10,35 @@ const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 export default new Vuex.Store({
   state: {
     houseInfos: [],
-    // markers: [],
+    selectedInfosByLatlng: [],
   },
   getters: {
     getHouseInfos(state) {
       return state.houseInfos;
     },
-    // getMarkers(state) {
-    //   return state.markers;
-    // },
+    getSelectedInfosByLatlng(state) {
+      return state.selectedInfosByLatlng;
+    },
   },
   mutations: {
     HOUSEINFO(state, payload) {
       state.houseInfos = payload;
     },
-    // GEOCODE(state, payload) {
-    //   state.markers = payload;
-    // },
+    SEARCHBYLATLNG(state, payload) {
+      state.selectedInfosByLatlng = payload;
+    },
   },
   actions: {
-    HOUSEINFO: (store) => {
-      return axios
-        .get(`${SERVER_URL}/map/housedeal/내수동`)
-        .then((res) => {
-          store.commit('HOUSEINFO', res.data);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    },
+    // HOUSEINFO: (store) => {
+    //   return axios
+    //     .get(`${SERVER_URL}/map/housedeal/내수동`)
+    //     .then((res) => {
+    //       store.commit('HOUSEINFO', res.data);
+    //     })
+    //     .catch((err) => {
+    //       console.error(err);
+    //     });
+    // },
 
     MOVEMAP: (store, payload) => {
       return axios
@@ -47,40 +47,34 @@ export default new Vuex.Store({
         })
         .then((res) => {
           store.commit('HOUSEINFO', res.data);
-          console.log(res.data.length + '개의 거래정보를 발견했습니다!');
+          console.log(
+            '현재 [지도 범위]에서 [' +
+              res.data.length +
+              ']개의 거래정보를 발견했습니다!'
+          );
         })
         .catch((err) => {
           console.error(err);
         });
     },
 
-    // GEOCODE: (store, payload) => {
-    //   let tmpMarkers = [];
-    //   // let tmpLat;
-    //   // let tmpLng;
-    //   payload.forEach((data) => {
-    //     let address = data.dong + '+' + data.aptName + '+' + data.jibun;
-    //     axios
-    //       .get(
-    //         `https://maps.googleapis.com/maps/api/geocode/json?key=${GEOCODE_KEY}&address=${address}`
-    //       )
-    //       .then((res) => {
-    //         data.lat = res.data.results[0].geometry.location.lat;
-    //         data.lng = res.data.results[0].geometry.location.lng;
-    //         tmpMarkers.push({
-    //           lat: res.data.results[0].geometry.location.lat,
-    //           lng: res.data.results[0].geometry.location.lng,
-    //           aptName: data.aptName,
-    //           no: data.no,
-    //         });
-    //       })
-    //       .catch((err) => {
-    //         console.error(err);
-    //       });
-    //   });
-
-    //   store.commit('GEOCODE', tmpMarkers);
-    // },
+    SEARCHBYLATLNG: (store, payload) => {
+      return axios
+        .get(`${SERVER_URL}/map/search/latlng`, {
+          params: payload,
+        })
+        .then((res) => {
+          store.commit('SEARCHBYLATLNG', res.data);
+          console.log(
+            '현재 [좌표]에서 [' +
+              res.data.length +
+              ']개의 거래정보를 발견했습니다!'
+          );
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
   },
   modules: {},
 });

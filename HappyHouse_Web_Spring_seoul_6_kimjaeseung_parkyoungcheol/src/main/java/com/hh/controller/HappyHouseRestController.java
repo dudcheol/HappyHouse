@@ -83,4 +83,14 @@ public class HappyHouseRestController {
 		}
 	}
 
+	@GetMapping(value = "/map/search/latlng")
+	public List<HouseDealDto> getSearchByLatLng(@RequestParam(value = "lat") String lat,
+			@RequestParam(value = "lng") String lng) {
+		try {
+			return service.getSearchByLatLng(lat, lng);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
 }

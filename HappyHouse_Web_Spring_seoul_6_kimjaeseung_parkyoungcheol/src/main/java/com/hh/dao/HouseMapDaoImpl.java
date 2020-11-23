@@ -52,4 +52,9 @@ public class HouseMapDaoImpl implements HouseMapDao {
 		return mapper.getHouseDealInRange(swlat, swlng, nelat, nelng);
 	}
 
+	@Override
+	public List<HouseDealDto> getSearchByLatLng(String lat, String lng) throws Exception {
+		return mapper.getSearchByLatLng(lat, lng);
+	}
+
 }
