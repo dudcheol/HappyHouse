@@ -15,13 +15,16 @@ public class HouseDealDto {
 	private String jibun;
 	private String type;
 	private String rentMoney;
+	private String lat;
+	private String lng;
+	private String img;
 
 	public HouseDealDto() {
 	}
 
 	public HouseDealDto(String no, String dong, String aptName, String code, String dealAmount, String buildYear,
 			String dealYear, String dealMonth, String dealDay, String area, String floor, String jibun, String type,
-			String rentMoney) {
+			String rentMoney, String lat, String lng, String img) {
 		this.no = no;
 		this.dong = dong;
 		this.aptName = aptName;
@@ -36,6 +39,9 @@ public class HouseDealDto {
 		this.jibun = jibun;
 		this.type = type;
 		this.rentMoney = rentMoney;
+		this.lat = lat;
+		this.lng = lng;
+		this.img = img;
 	}
 
 	public String getNo() {
@@ -150,4 +156,35 @@ public class HouseDealDto {
 		this.rentMoney = rentMoney;
 	}
 
+	public String getLat() {
+		return lat;
+	}
+
+	public void setLat(String lat) {
+		this.lat = lat;
+	}
+
+	public String getLng() {
+		return lng;
+	}
+
+	public void setLng(String lng) {
+		this.lng = lng;
+	}
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
+	@Override
+	public String toString() {
+		return "HouseDealDto [no=" + no + ", dong=" + dong + ", aptName=" + aptName + ", code=" + code + ", dealAmount="
+				+ dealAmount + ", buildYear=" + buildYear + ", dealYear=" + dealYear + ", dealMonth=" + dealMonth
+				+ ", dealDay=" + dealDay + ", area=" + area + ", floor=" + floor + ", jibun=" + jibun + ", type=" + type
+				+ ", rentMoney=" + rentMoney + ", lat=" + lat + ", lng=" + lng + ", img=" + img + "]";
+	}
 }

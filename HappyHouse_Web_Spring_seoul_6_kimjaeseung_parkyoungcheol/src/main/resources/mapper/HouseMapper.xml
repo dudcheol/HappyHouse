@@ -28,7 +28,7 @@ namespace: 작업하는 테이블들을 구분해주기 위한 식별자 -->
 	</select>
 	
 	<select id="getDealsInDong" parameterType="string" resultType="HouseDealDto">
-		SELECT * FROM housedeal WHERE dong = #{dong}
+		SELECT * FROM housedealinfo WHERE dong = #{dong}
 		ORDER BY AptName
 	</select>
 	
