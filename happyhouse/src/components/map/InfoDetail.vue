@@ -6,60 +6,21 @@
       {{ infos[0].dealYear }}.{{ infos[0].dealMonth }}.{{ infos[0].dealDay }}
     </p>
     <b-tabs content-class="mt-3">
-      <b-tab title="최근거래" active>
-        <b-container class="px-3 py-2">
-          <b-card
-            border-variant="info"
-            header="최근 실거래가"
-            align="center"
-            class="mb-4"
-          >
-            <b-card-text
-              ><h3 class="font-weight-bolder">
-                {{ infos[0].dealAmount | price }}
-              </h3>
-              <b-card-text v-if="compare == 0">
-                <b-badge variant="light">변동없음</b-badge>
-              </b-card-text>
-              <b-card-text v-if="compare > 0">
-                평균거래가 대비
-                <b-badge variant="light">{{ compare | price }}</b-badge>
-                <b-icon-arrow-down-circle-fill
-                  variant="warning"
-                ></b-icon-arrow-down-circle-fill>
-              </b-card-text>
-              <b-card-text v-if="compare < 0">
-                평균거래가 대비
-                <b-badge variant="light">{{ (compare * -1) | price }}</b-badge>
-                <b-icon-arrow-up-circle-fill
-                  variant="success"
-                ></b-icon-arrow-up-circle-fill>
-              </b-card-text>
-            </b-card-text>
-          </b-card>
-          <b-table :items="recentlyItem" stacked></b-table>
-        </b-container>
-      </b-tab>
+      <b-tab title="최근거래" active
+        ><RecentDeal
+          :deal="deal | price"
+          :item="recentlyItem"
+          :compare="compare"
+          :compareString="Math.abs(compare) | price"
+        ></RecentDeal
+      ></b-tab>
       <b-tab>
-        <template #title>상세정보({{ infos.length }})</template>
-        <b-container class="px-3 py-2">
-          <b-card
-            border-variant="secondary"
-            header="평균 실거래가"
-            align="center"
-            class="mb-4"
-          >
-            <b-card-text class="font-weight-bolder"
-              ><h3>
-                {{ avg | price }}
-              </h3>
-            </b-card-text>
-          </b-card>
-          <h5 class="text-left pl-2 font-weight-bolder">
-            <b-icon-card-checklist /> 거래내역 {{ infos.length }}건
-          </h5>
-          <b-table :items="items" stacked></b-table>
-        </b-container>
+        <template #title>모든거래({{ infos.length }})</template>
+        <DetailDeal
+          :items="items"
+          :avg="avg | price"
+          :cnt="infos.length"
+        ></DetailDeal>
       </b-tab>
       <b-tab title="인프라"><Infra></Infra></b-tab>
       <b-tab title="리뷰"><Review></Review></b-tab>
@@ -70,14 +31,13 @@
 <script>
 import Review from './detail/Review.vue';
 import Infra from './detail/Infra.vue';
+import RecentDeal from './detail/RecentDeal.vue';
+import DetailDeal from './detail/DetailDeal.vue';
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
-  components: { Review, Infra },
-  comments: {
-    Review,
-    Infra,
-  },
+  components: { Review, Infra, RecentDeal, DetailDeal },
+
   props: {
     selectedInfo: Object,
   },
@@ -117,6 +77,7 @@ export default {
           상권정보: '-',
         },
       ],
+      deal: 0,
       avg: 0,
       compare: 0,
     };
@@ -126,6 +87,7 @@ export default {
     ...mapActions(['SEARCHBYLATLNG']),
 
     update(infos) {
+      this.deal = infos[0].dealAmount;
       this.infos = infos;
       this.items = [];
       this.recentlyItem = [
