@@ -1,11 +1,6 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
 import axios from 'axios';
 
-Vue.use(Vuex);
-
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
-// const GEOCODE_KEY = process.env.VUE_APP_GEOCODE_KEY;
 
 const mapstore = {
   state: {
@@ -29,17 +24,6 @@ const mapstore = {
     },
   },
   actions: {
-    // HOUSEINFO: (store) => {
-    //   return axios
-    //     .get(`${SERVER_URL}/map/housedeal/내수동`)
-    //     .then((res) => {
-    //       store.commit('HOUSEINFO', res.data);
-    //     })
-    //     .catch((err) => {
-    //       console.error(err);
-    //     });
-    // },
-
     MOVEMAP: (store, payload) => {
       return axios
         .get(`${SERVER_URL}/map/range`, {

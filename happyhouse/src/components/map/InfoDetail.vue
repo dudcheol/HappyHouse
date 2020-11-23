@@ -22,7 +22,9 @@
           :cnt="infos.length"
         ></DetailDeal>
       </b-tab>
-      <b-tab title="인프라"><Infra></Infra></b-tab>
+      <b-tab title="인프라"
+        ><Infra :lat="selectedInfo.lat" :lng="selectedInfo.lng"></Infra
+      ></b-tab>
       <b-tab title="리뷰"><Review></Review></b-tab>
     </b-tabs>
   </b-container>
