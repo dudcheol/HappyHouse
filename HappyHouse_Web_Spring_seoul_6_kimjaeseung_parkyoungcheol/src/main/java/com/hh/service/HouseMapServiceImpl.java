@@ -46,4 +46,10 @@ public class HouseMapServiceImpl implements HouseMapService {
 		return dao.getSearchByAptName(aptName);
 	}
 
+	@Override
+	public List<HouseDealDto> getHouseDealInRange(String swlat, String swlng, String nelat, String nelng)
+			throws Exception {
+		return dao.getHouseDealInRange(swlat, swlng, nelat, nelng);
+	}
+
 }

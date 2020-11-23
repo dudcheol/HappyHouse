@@ -40,6 +40,20 @@ export default new Vuex.Store({
         });
     },
 
+    MOVEMAP: (store, payload) => {
+      return axios
+        .get(`${SERVER_URL}/map/range`, {
+          params: payload,
+        })
+        .then((res) => {
+          store.commit('HOUSEINFO', res.data);
+          console.log(res.data.length + '개의 거래정보를 발견했습니다!');
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+
     // GEOCODE: (store, payload) => {
     //   let tmpMarkers = [];
     //   // let tmpLat;

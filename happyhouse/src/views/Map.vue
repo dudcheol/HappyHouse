@@ -19,11 +19,9 @@
 <script>
 import MapInput from '../components/map/MapInput.vue';
 import InfoDetail from '../components/map/InfoDetail.vue';
-// import axios from 'axios';
 import { mapGetters, mapActions } from 'vuex';
 
 const MAP_APP_KEY = process.env.VUE_APP_MAP_APP_KEY;
-// const GEOCODE_KEY = process.env.VUE_APP_GEOCODE_KEY;
 
 export default {
   components: { MapInput, InfoDetail },
@@ -53,7 +51,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['HOUSEINFO']),
+    ...mapActions(['HOUSEINFO', 'MOVEMAP']),
 
     addKakaoMapScript() {
       const script = document.createElement('script');
@@ -81,7 +79,26 @@ export default {
       var zoomControl = new kakao.maps.ZoomControl();
       this.map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
+      // 지도가 이동, 확대, 축소로 인해 지도영역이 변경되면 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
+      kakao.maps.event.addListener(this.map, 'tilesloaded', this.moveMap);
+
       this.HOUSEINFO();
+    },
+
+    moveMap() {
+      // 지도 영역정보를 얻어옵니다
+      var bounds = this.map.getBounds();
+      // 영역정보의 남서쪽 정보를 얻어옵니다
+      var swLatlng = bounds.getSouthWest();
+      // 영역정보의 북동쪽 정보를 얻어옵니다
+      var neLatlng = bounds.getNorthEast();
+
+      this.MOVEMAP({
+        swlat: swLatlng.Ma,
+        swlng: swLatlng.La,
+        nelat: neLatlng.Ma,
+        nelng: neLatlng.La,
+      });
     },
 
     updateMap(houseinfos) {
@@ -93,33 +110,6 @@ export default {
         this.addMarker(this.map, position, houseinfos[i]);
         // console.log(JSON.stringify(data));
       }
-
-      // houseinfos.forEach((data) => {
-      //   // console.log(data.lng);
-      //   try {
-      //     var position = new kakao.maps.LatLng(data.lat, data.lng);
-      //     this.addMarker(this.map, position, data);
-      //   } catch (e) {
-      //     console.log(e);
-      //     // console.log(JSON.stringify(data));
-      //   }
-      //   // let address = data.dong + '+' + data.aptName + '+' + data.jibun;
-      //   // axios
-      //   //   .get(
-      //   //     `https://maps.googleapis.com/maps/api/geocode/json?key=${GEOCODE_KEY}&address=${address}`
-      //   //   )
-      //   //   .then((res) => {
-      //   //     var marker = new kakao.maps.LatLng(
-      //   //       res.data.results[0].geometry.location.lat,
-      //   //       res.data.results[0].geometry.location.lng
-      //   //     );
-      //   //     this.addMarker(this.map, marker, data);
-      //   //     // Todo : 같은 아파트 여러개 거래기록이 있는 경우 마커확인할 수 없음
-      //   //   })
-      //   //   .catch((err) => {
-      //   //     console.error(err);
-      //   //   });
-      // });
     },
 
     // 마커를 생성하고 지도위에 표시하는 함수입니다
@@ -141,7 +131,7 @@ export default {
       kakao.maps.event.addListener(marker, 'click', function() {
         select(data);
         open();
-        map.panTo(position);
+        // map.panTo(position);
       });
     },
 

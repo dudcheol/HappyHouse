@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hh.service.HouseMapService;
@@ -20,11 +21,11 @@ import com.hh.vo.SidoGugunCodeDto;
 @CrossOrigin
 @RestController
 public class HappyHouseRestController {
-	
+
 	@Autowired
 	HouseMapService service;
-	
-	@GetMapping(value="/map/sido")
+
+	@GetMapping(value = "/map/sido")
 	public List<SidoGugunCodeDto> getSido() {
 		try {
 			List<SidoGugunCodeDto> dto = service.getSido();
@@ -34,8 +35,8 @@ public class HappyHouseRestController {
 			return null;
 		}
 	}
-	
-	@GetMapping(value="/map/gugun/{sido}")
+
+	@GetMapping(value = "/map/gugun/{sido}")
 	public List<SidoGugunCodeDto> getGugun(@PathVariable String sido) {
 		try {
 			return service.getGugunInSido(sido);
@@ -43,8 +44,8 @@ public class HappyHouseRestController {
 			return null;
 		}
 	}
-	
-	@GetMapping(value="/map/dong/{gugun}")
+
+	@GetMapping(value = "/map/dong/{gugun}")
 	public List<HouseInfoDto> getDong(@PathVariable String gugun) {
 		try {
 			return service.getDongInGugun(gugun);
@@ -52,8 +53,8 @@ public class HappyHouseRestController {
 			return null;
 		}
 	}
-	
-	@GetMapping(value="/map/housedeal/{dong}")
+
+	@GetMapping(value = "/map/housedeal/{dong}")
 	public List<HouseDealDto> getHouseDeal(@PathVariable String dong) {
 		try {
 			return service.getDealsInDong(dong);
@@ -61,8 +62,8 @@ public class HappyHouseRestController {
 			return null;
 		}
 	}
-	
-	@GetMapping(value="/map/search/{aptName}")
+
+	@GetMapping(value = "/map/search/{aptName}")
 	public List<HouseDealDto> getSearchByAptName(@PathVariable String aptName) {
 		try {
 			return service.getSearchByAptName(aptName);
@@ -70,4 +71,16 @@ public class HappyHouseRestController {
 			return null;
 		}
 	}
+
+	@GetMapping(value = "/map/range")
+	public List<HouseDealDto> getHouseDealInRange(@RequestParam(value = "swlat") String swlat,
+			@RequestParam(value = "swlng") String swlng, @RequestParam(value = "nelat") String nelat,
+			@RequestParam(value = "nelng") String nelng) {
+		try {
+			return service.getHouseDealInRange(swlat, swlng, nelat, nelng);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
 }
