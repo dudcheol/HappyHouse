@@ -7,7 +7,7 @@ Vue.use(Vuex);
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 // const GEOCODE_KEY = process.env.VUE_APP_GEOCODE_KEY;
 
-export default new Vuex.Store({
+const mapstore = {
   state: {
     houseInfos: [],
     selectedInfosByLatlng: [],
@@ -77,4 +77,6 @@ export default new Vuex.Store({
     },
   },
   modules: {},
-});
+};
+
+export default mapstore;

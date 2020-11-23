@@ -1,12 +1,13 @@
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from 'vue';
+import App from './App.vue';
 // import router from './router';
-import mapstore from './store/mapstore.js';
+// import mapstore from './store/mapstore.js';
+import store from '@/store/index.js';
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 new Vue({
   // router,
-  store: mapstore,
-  render: h => h(App),
-}).$mount('#app')
+  store,
+  render: (h) => h(App),
+}).$mount('#app');
