@@ -14,6 +14,7 @@ const mapstore = {
     cafes: [],
     cultures: [],
     allCategory: [],
+    totalIdx: 0,
   },
   getters: {
     getConveniences(state) {
@@ -44,6 +45,9 @@ const mapstore = {
         state.cultures,
       ];
     },
+    getTotalIdx(state) {
+      return state.totalIdx;
+    },
   },
   mutations: {
     CONVENIENCE(state, payload) {
@@ -64,9 +68,16 @@ const mapstore = {
     CULTURE(state, payload) {
       state.cultures = payload;
     },
+    TOTALIDX(state, payload) {
+      state.totalIdx += payload;
+    },
+    INITIDX(state) {
+      state.totalIdx = 0;
+    },
   },
   actions: {
     ALLCATEGORY(store, payload) {
+      store.commit('INITIDX');
       store.dispatch('CONVENIENCE', payload);
       store.dispatch('EDUCATION', payload);
       store.dispatch('TRAFFIC', payload);
@@ -81,21 +92,23 @@ const mapstore = {
           axios.spread((res1, res2) => {
             console.log('[편의점]의 수 : ' + res1.data.documents.length);
             console.log('[대형마트]의 수 : ' + res2.data.documents.length);
+            let idx = calidx('CONVENIENCE', {
+              a: res1.data.documents.length,
+              adist: getDistance(
+                res1.data.documents.length,
+                res1.data.documents[0]
+              ),
+              b: res2.data.documents.length,
+              bdist: getDistance(
+                res2.data.documents.length,
+                res2.data.documents[0]
+              ),
+            });
+            store.commit('TOTALIDX', idx);
             store.commit(
               'CONVENIENCE',
               Object.assign(res1.data.documents, res2.data.documents, {
-                idx: calidx('CONVENIENCE', {
-                  a: res1.data.documents.length,
-                  adist: getDistance(
-                    res1.data.documents.length,
-                    res1.data.documents[0]
-                  ),
-                  b: res2.data.documents.length,
-                  bdist: getDistance(
-                    res2.data.documents.length,
-                    res2.data.documents[0]
-                  ),
-                }),
+                idx,
               })
             );
           })
@@ -111,22 +124,23 @@ const mapstore = {
           axios.spread((res1, res2) => {
             console.log('[학교]의 수 : ' + res1.data.documents.length);
             console.log('[학원]의 수 : ' + res2.data.documents.length);
-
+            let idx = calidx('EDUCATION', {
+              a: res1.data.documents.length,
+              adist: getDistance(
+                res1.data.documents.length,
+                res1.data.documents[0]
+              ),
+              b: res2.data.documents.length,
+              bdist: getDistance(
+                res2.data.documents.length,
+                res2.data.documents[0]
+              ),
+            });
+            store.commit('TOTALIDX', idx);
             store.commit(
               'EDUCATION',
               Object.assign(res1.data.documents, res2.data.documents, {
-                idx: calidx('EDUCATION', {
-                  a: res1.data.documents.length,
-                  adist: getDistance(
-                    res1.data.documents.length,
-                    res1.data.documents[0]
-                  ),
-                  b: res2.data.documents.length,
-                  bdist: getDistance(
-                    res2.data.documents.length,
-                    res2.data.documents[0]
-                  ),
-                }),
+                idx,
               })
             );
           })
@@ -139,16 +153,18 @@ const mapstore = {
       return getMetro(payload)
         .then((res) => {
           console.log('[지하철]의 수 : ' + res.data.documents.length);
+          let idx = calidx('TRAFFIC', {
+            a: res.data.documents.length,
+            adist: getDistance(
+              res.data.documents.length,
+              res.data.documents[0]
+            ),
+          });
+          store.commit('TOTALIDX', idx);
           store.commit(
             'TRAFFIC',
             Object.assign(res.data.documents, {
-              idx: calidx('TRAFFIC', {
-                a: res.data.documents.length,
-                adist: getDistance(
-                  res.data.documents.length,
-                  res.data.documents[0]
-                ),
-              }),
+              idx,
             })
           );
         })
@@ -163,21 +179,23 @@ const mapstore = {
           axios.spread((res1, res2) => {
             console.log('[병원]의 수 : ' + res1.data.documents.length);
             console.log('[약국]의 수 : ' + res2.data.documents.length);
+            let idx = calidx('MEDICAL', {
+              a: res1.data.documents.length,
+              adist: getDistance(
+                res1.data.documents.length,
+                res1.data.documents[0]
+              ),
+              b: res2.data.documents.length,
+              bdist: getDistance(
+                res2.data.documents.length,
+                res2.data.documents[0]
+              ),
+            });
+            store.commit('TOTALIDX', idx);
             store.commit(
               'MEDICAL',
               Object.assign(res1.data.documents, res2.data.documents, {
-                idx: calidx('MEDICAL', {
-                  a: res1.data.documents.length,
-                  adist: getDistance(
-                    res1.data.documents.length,
-                    res1.data.documents[0]
-                  ),
-                  b: res2.data.documents.length,
-                  bdist: getDistance(
-                    res2.data.documents.length,
-                    res2.data.documents[0]
-                  ),
-                }),
+                idx,
               })
             );
           })
@@ -190,16 +208,18 @@ const mapstore = {
       return getCafe(payload)
         .then((res) => {
           console.log('[카페]의 수 : ' + res.data.documents.length);
+          let idx = calidx('CAFE', {
+            a: res.data.documents.length,
+            adist: getDistance(
+              res.data.documents.length,
+              res.data.documents[0]
+            ),
+          });
+          store.commit('TOTALIDX', idx);
           store.commit(
             'CAFE',
             Object.assign(res.data.documents, {
-              idx: calidx('CAFE', {
-                a: res.data.documents.length,
-                adist: getDistance(
-                  res.data.documents.length,
-                  res.data.documents[0]
-                ),
-              }),
+              idx,
             })
           );
         })
@@ -211,16 +231,18 @@ const mapstore = {
       return getCulture(payload)
         .then((res) => {
           console.log('[문화시설]의 수 : ' + res.data.documents.length);
+          let idx = calidx('CULTURE', {
+            a: res.data.documents.length,
+            adist: getDistance(
+              res.data.documents.length,
+              res.data.documents[0]
+            ),
+          });
+          store.commit('TOTALIDX', idx);
           store.commit(
             'CULTURE',
             Object.assign(res.data.documents, {
-              idx: calidx('CULTURE', {
-                a: res.data.documents.length,
-                adist: getDistance(
-                  res.data.documents.length,
-                  res.data.documents[0]
-                ),
-              }),
+              idx,
             })
           );
         })

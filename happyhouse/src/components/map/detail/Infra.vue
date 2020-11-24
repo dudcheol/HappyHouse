@@ -1,5 +1,27 @@
 <template>
-  <b-container>
+  <b-container class="py-2">
+    <b-card
+      border-variant="warning"
+      header-bg-variant="warning"
+      header-border-variant="warning"
+      header-text-variant="black"
+      header="인프라 지수"
+      align="center"
+      class="mb-4"
+    >
+      <b-card-text>
+        <h1 class="font-weight-bold m-0">{{ totalIdx }}</h1>
+        <b-form-rating
+          v-model="totalIdx"
+          readonly
+          no-border
+          variant="warning"
+          inline
+          size="lg"
+          class="p-0 bg-transparent"
+        ></b-form-rating>
+      </b-card-text>
+    </b-card>
     <b-row class="px-3 pb-3" align-h="end">
       <b-button @click="allOpen" size="sm" variant="" pill>{{
         openStr
@@ -27,6 +49,7 @@
                 no-border
                 variant="warning"
                 inline
+                size="sm"
                 class="p-0 bg-transparent"
               ></b-form-rating>
             </b-col> </b-row
@@ -80,6 +103,9 @@ export default {
         y: this.lat,
       });
     },
+    getTotalIdx: function(val) {
+      this.totalIdx = Math.round((val / 6) * 10) / 10;
+    },
   },
   data() {
     return {
@@ -96,6 +122,7 @@ export default {
         'cup',
         'controller',
       ],
+      totalIdx: 0,
     };
   },
   computed: {
@@ -107,6 +134,7 @@ export default {
       'getCafes',
       'getCultures',
       'getAllCategory',
+      'getTotalIdx',
     ]),
   },
   methods: {
