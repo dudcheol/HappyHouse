@@ -40,6 +40,14 @@
         <b-card-body>
           <b-row class="px-2">
             <h6
+              v-if="items.length == 0"
+              class="p-0 my-1 mx-auto"
+              style="color:dimgrey"
+            >
+              <b-icon-emoji-expressionless></b-icon-emoji-expressionless>
+              근처에서 {{ category[index] }}시설을 찾지 못했습니다.
+            </h6>
+            <h6
               class="p-0 my-1"
               style="color:dimgrey"
               v-for="(item, index) in items"
@@ -75,7 +83,7 @@ export default {
   },
   data() {
     return {
-      radius: 1000,
+      radius: 500,
       visible: [false, false, false, false, false, false],
       category: ['편의', '교육', '교통', '의료', '카페', '문화'],
       allVisible: false,
