@@ -13,8 +13,7 @@
           @keyup="searchQuery"
           @keyup.enter="searchEnter"
           v-model="query"
-          @focus="focus"
-          @blur="blur"
+          @focus="inputFocus"
         ></b-form-input>
       </b-col>
       <b-col cols="2" class="px-0">
@@ -53,7 +52,7 @@
 <script>
 export default {
   props: {
-    resultSearch: Array,
+    resultSearch: Object,
     resultVisible: Boolean,
   },
   data() {
@@ -70,6 +69,8 @@ export default {
       this.$emit('search-query', this.query);
     },
     resultClick(position) {
+      console.log('click!!!');
+      this.query = position.place_name;
       this.$emit('result-click', {
         lat: position.y,
         lng: position.x,
@@ -82,10 +83,10 @@ export default {
         lng: this.resultSearch.data[0].x,
       });
     },
-    focus() {
+    inputFocus() {
       this.$emit('result-visible', true);
     },
-    blur() {
+    inputBlur() {
       this.$emit('result-visible', false);
     },
   },
