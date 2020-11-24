@@ -57,4 +57,11 @@ public class HouseMapServiceImpl implements HouseMapService {
 		return dao.getSearchByLatLng(lat, lng);
 	}
 
+	@Override
+	public List<HouseDealDto> getHouseDealInRangeByPrice(String swlat, String swlng, String nelat, String nelng,
+			String price) throws Exception {
+//		System.out.println("service:"+price);
+		return dao.getHouseDealInRangeByPrice(swlat, swlng, nelat, nelng, price);
+	}
+
 }

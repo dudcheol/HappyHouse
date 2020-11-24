@@ -75,10 +75,18 @@ public class HappyHouseRestController {
 	@GetMapping(value = "/map/range")
 	public List<HouseDealDto> getHouseDealInRange(@RequestParam(value = "swlat") String swlat,
 			@RequestParam(value = "swlng") String swlng, @RequestParam(value = "nelat") String nelat,
-			@RequestParam(value = "nelng") String nelng) {
+			@RequestParam(value = "nelng") String nelng, @RequestParam(value = "deal") String deal,
+			@RequestParam(value = "infra") String infra) {
 		try {
-			return service.getHouseDealInRange(swlat, swlng, nelat, nelng);
+			if("20".equals(deal)) return service.getHouseDealInRange(swlat, swlng, nelat, nelng);
+			String price = Math.round(Double.parseDouble(deal)*10000)+"";
+//			System.out.println(price);
+			List<HouseDealDto> ret = service.getHouseDealInRangeByPrice(swlat, swlng, nelat, nelng, price);
+//			System.out.println(ret.size());
+//			System.out.println(ret);
+			return ret;
 		} catch (Exception e) {
+			System.out.println(e);
 			return null;
 		}
 	}

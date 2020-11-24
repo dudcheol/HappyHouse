@@ -15,6 +15,7 @@
       @search-query="searchQuery"
       @result-click="moveMapToPosition"
       @result-visible="changeResultVisible"
+      @modify-filter="modifyFilter"
       :resultSearch="resultSearch"
       :resultVisible="resultVisible"
     ></map-input>
@@ -42,6 +43,8 @@ export default {
       resultVisible: false,
       selectedInfo: {},
       resultSearch: [],
+      rangeDeal: 20,
+      rangeInfra: 0,
     };
   },
 
@@ -133,11 +136,16 @@ export default {
       // 영역정보의 북동쪽 정보를 얻어옵니다
       var neLatlng = bounds.getNorthEast();
 
+      console.log('sw = ' + swLatlng);
+      console.log('ne = ' + neLatlng);
+
       this.MOVEMAP({
         swlat: swLatlng.Ma,
         swlng: swLatlng.La,
         nelat: neLatlng.Ma,
         nelng: neLatlng.La,
+        deal: this.rangeDeal,
+        infra: this.rangeInfra,
       });
     },
 
@@ -151,7 +159,7 @@ export default {
       this.clearMarkers(null);
       this.clusterer.clear();
       var level = this.map.getLevel();
-      console.log(this.map.getLevel());
+      console.log('현재 지도의 레벨 : ' + this.map.getLevel());
 
       if (level > 5) {
         return;
@@ -231,6 +239,12 @@ export default {
 
     changeResultVisible(bool) {
       this.resultVisible = bool;
+    },
+
+    modifyFilter(filter) {
+      this.rangeDeal = filter.deal;
+      this.rangeInfra = filter.infra;
+      this.moveMap();
     },
   },
 };

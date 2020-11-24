@@ -16,5 +16,6 @@ public interface HouseMapDao {
 	List<HouseDealDto> getDealsInDong(String dong) throws Exception;
 	List<HouseDealDto> getHouseDealInRange(String swlat, String swlng, String nelat, String nelng) throws Exception;
 	List<HouseDealDto> getSearchByLatLng(String lat, String lng) throws Exception;
+	List<HouseDealDto> getHouseDealInRangeByPrice(String swlat, String swlng, String nelat, String nelng, String price) throws Exception;
 	
 }

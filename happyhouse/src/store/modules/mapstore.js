@@ -6,6 +6,7 @@ const mapstore = {
   state: {
     houseInfos: [],
     selectedInfosByLatlng: [],
+    filters: {},
   },
   getters: {
     getHouseInfos(state) {
@@ -13,6 +14,9 @@ const mapstore = {
     },
     getSelectedInfosByLatlng(state) {
       return state.selectedInfosByLatlng;
+    },
+    getFilters(state) {
+      return state.filters;
     },
   },
   mutations: {

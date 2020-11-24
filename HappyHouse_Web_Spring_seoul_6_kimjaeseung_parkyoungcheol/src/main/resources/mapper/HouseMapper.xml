@@ -49,6 +49,12 @@ namespace: 작업하는 테이블들을 구분해주기 위한 식별자 -->
 		WHERE lat=#{lat} AND lng=#{lng}
 		ORDER BY no DESC;
 	</select>
+	
+	<select id="getHouseDealInRangeByPrice" parameterType="string" resultType="HouseDealDto">
+		SELECT * 
+		FROM housedealinfo
+		WHERE (dealAmount &lt;= CAST(#{price} AS SIGNED INTEGER)) AND (lat&gt;=#{swlat} AND lng&gt;=#{swlng}) AND (lat&lt;=#{nelat} and lng&lt;=#{nelng})
+	</select>
 </mapper>
 
 

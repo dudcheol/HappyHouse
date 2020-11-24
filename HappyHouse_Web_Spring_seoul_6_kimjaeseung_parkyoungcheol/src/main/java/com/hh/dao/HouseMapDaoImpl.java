@@ -57,4 +57,11 @@ public class HouseMapDaoImpl implements HouseMapDao {
 		return mapper.getSearchByLatLng(lat, lng);
 	}
 
+	@Override
+	public List<HouseDealDto> getHouseDealInRangeByPrice(String swlat, String swlng, String nelat, String nelng,
+			String price) throws Exception {
+//		System.out.println("dao:"+price);
+		return mapper.getHouseDealInRangeByPrice(swlat, swlng, nelat, nelng, price);
+	}
+
 }
