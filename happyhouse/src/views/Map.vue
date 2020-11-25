@@ -100,7 +100,7 @@ export default {
       this.clusterer = new kakao.maps.MarkerClusterer({
         map: this.map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
         averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
-        minLevel: 5, // 클러스터 할 최소 지도 레벨
+        minLevel: 4, // 클러스터 할 최소 지도 레벨
       });
 
       this.ps = new kakao.maps.services.Places();
@@ -192,9 +192,23 @@ export default {
 
     // 마커를 생성하고 지도위에 표시하는 함수입니다
     addMarker(map, position, data) {
+      // var MARKER_SRC = '@/assets/location_64.png';
+      var MARKER_SRC =
+        'https://www.flaticon.com/svg/static/icons/svg/727/727590.svg';
+      var imageSize = new kakao.maps.Size(42, 42);
+      var imageOption = { offset: new kakao.maps.Point(27, 69) };
+
+      // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+      var markerImage = new kakao.maps.MarkerImage(
+        MARKER_SRC,
+        imageSize,
+        imageOption
+      );
+
       // 마커를 생성합니다
       var marker = new kakao.maps.Marker({
         position: position,
+        image: markerImage,
         clickable: true, // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
       });
 
