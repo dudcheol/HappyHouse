@@ -3,9 +3,18 @@
     id="search-box"
     class="m-2 p-1 position-absolute border border-light rounded shadow"
   >
-    <b-row class="pl-1 pt-1 pb-1 mx-auto">
-      <b-col cols="10" class="px-0">
-        <b-form-input
+    <b-row align-v="center" class="pl-3 py-1">
+      <div @click="main" class="mouseover-cursor pr-3">
+        <span class="pl-2">
+          <b-button variant="default" pill class="p-0 mr-1"
+            ><b-icon-building variant="primary" scale="1"></b-icon-building
+          ></b-button> </span
+        ><span class="font-weight-bold text-primary">HappyHouse</span>
+      </div>
+    </b-row>
+    <b-row class="p-1 mx-auto">
+      <span class="flex-fill"
+        ><b-form-input
           id="search-input"
           type="search"
           class="form-control form-control"
@@ -14,13 +23,13 @@
           @keyup.enter="searchEnter"
           v-model="query"
           @focus="inputFocus"
-        ></b-form-input>
-      </b-col>
-      <b-col cols="2" class="px-0">
-        <b-button id="search-apt" variant="primary" @click="searchEnter">
+        ></b-form-input
+      ></span>
+      <span
+        ><b-button id="search-apt" variant="primary" @click="searchEnter">
           검색
-        </b-button>
-      </b-col>
+        </b-button></span
+      >
     </b-row>
     <b-container class="px-1 pb-1 mt-1">
       <b-list-group horizontal style="height:30px">
@@ -185,6 +194,9 @@ export default {
         infra: this.rangeInfra,
       });
     },
+    main() {
+      window.location.href = '/main';
+    },
   },
 };
 </script>
@@ -198,5 +210,8 @@ export default {
 #search-result {
   max-height: 300px;
   overflow: auto;
+}
+.mouseover-cursor {
+  cursor: pointer;
 }
 </style>

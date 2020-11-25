@@ -23,9 +23,15 @@
         ></DetailDeal>
       </b-tab>
       <b-tab title="인프라"
-        ><Infra :lat="selectedInfo.lat" :lng="selectedInfo.lng"></Infra
+        ><Infra
+          :no="selectedInfo.no"
+          :lat="selectedInfo.lat"
+          :lng="selectedInfo.lng"
+        ></Infra
       ></b-tab>
-      <b-tab title="리뷰"><Review></Review></b-tab>
+      <b-tab :title="review == 0 ? '리뷰' : `리뷰(${review})`"
+        ><Review @review-count="reviewCount" :info="selectedInfo"></Review
+      ></b-tab>
     </b-tabs>
   </b-container>
 </template>
@@ -82,6 +88,7 @@ export default {
       deal: 0,
       avg: 0,
       compare: 0,
+      review: 0,
     };
   },
 
@@ -119,6 +126,9 @@ export default {
       this.avg = Math.round(sum / this.infos.length);
       this.compare =
         this.avg - parseInt(this.infos[0].dealAmount.replace(',', ''));
+    },
+    reviewCount(cnt) {
+      this.review = cnt;
     },
   },
 

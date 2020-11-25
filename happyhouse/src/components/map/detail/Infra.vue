@@ -92,11 +92,12 @@ import { mapGetters, mapActions } from 'vuex';
 
 export default {
   props: {
+    no: String,
     lat: String,
     lng: String,
   },
   watch: {
-    lat: function() {
+    no: function() {
       this.ALLCATEGORY({
         radius: this.radius,
         x: this.lng,
